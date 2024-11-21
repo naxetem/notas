@@ -33,14 +33,14 @@ st.pyplot(fig)
 
 # Posición según puntuación
 st.subheader("Calcular posición de una nota")
-nota = st.number_input("Introduce una puntuación:", min_value=0.0, max_value=160.0, step=0.1)
+nota = st.number_input("Introduce una puntuación:", min_value=0.0, max_value=160.0, step=0.1, format="%.2f")
 
 # Calcular posición automáticamente al cambiar la nota
 try:
     filtrado = df_filtered[df_filtered["Puntuacion total directa"] <= nota]
     if not filtrado.empty:
         posicion = filtrado.iloc[0]["orden"]
-        st.write(f"La posición para la nota {nota} es: {posicion}")
+        st.write(f"La posición para la nota {nota:.2f} es: {posicion}")
     else:
         st.write("No se encontró una posición para la nota ingresada.")
 except Exception as e:
