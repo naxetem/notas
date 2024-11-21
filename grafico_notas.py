@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # Cargar los datos
-df_filtered=pd.read_csv("Notas_disociadas.csv")
+df_filtered=pd.read_csv("notas_disociadas.csv")
 
 # Calcular intervalos
 min_value = int(df_filtered['Puntuacion total directa'].min())
