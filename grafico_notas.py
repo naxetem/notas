@@ -12,6 +12,11 @@ max_value = int(df_filtered['Puntuacion total directa'].max()) + 1
 df_filtered['Intervalo'] = pd.cut(df_filtered['Puntuacion total directa'], bins=range(min_value, max_value + 1, 1), right=False)
 interval_counts = df_filtered['Intervalo'].value_counts().sort_index()
 
+# Calcular percentiles
+mediana = df_filtered['Puntuacion total directa'].median()
+percentil_25 = df_filtered['Puntuacion total directa'].quantile(0.25)
+percentil_75 = df_filtered['Puntuacion total directa'].quantile(0.75)
+
 # Interfaz de Streamlit
 st.title("Gráficos y Posición de Puntuaciones TAI 2023")
 
@@ -24,6 +29,14 @@ interval_counts.plot(kind='bar', ax=ax, color='blue', width=0.9)
 intervals = interval_counts.index
 labels = [str(interval.left) if i % 5 == 0 else '' for i, interval in enumerate(intervals)]
 ax.set_xticklabels(labels, rotation=45)
+
+# Añadir líneas de percentiles y mediana
+ax.axvline(mediana, color='red', linestyle='--', linewidth=2, label='Mediana')
+ax.axvline(percentil_25, color='green', linestyle='--', linewidth=2, label='Percentil 25')
+ax.axvline(percentil_75, color='orange', linestyle='--', linewidth=2, label='Percentil 75')
+
+# Añadir leyenda
+ax.legend()
 
 ax.set_xlabel('Intervalo de Puntuación')
 ax.set_ylabel('Frecuencia')
