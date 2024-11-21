@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # Cargar los datos
-df_filtered=pd.read_csv("notas_disociadas.csv")
+df_filtered = pd.read_csv("notas_disociadas.csv")
 
 # Calcular intervalos
 min_value = int(df_filtered['Puntuacion total directa'].min())
@@ -23,7 +23,7 @@ interval_counts.plot(kind='bar', ax=ax, color='blue', width=0.9)
 # Ajustar etiquetas del eje X
 intervals = interval_counts.index
 labels = [str(interval.left) if i % 5 == 0 else '' for i, interval in enumerate(intervals)]
-ax.set_xticklabels(labels)
+ax.set_xticklabels(labels, rotation=45)
 
 ax.set_xlabel('Intervalo de Puntuación')
 ax.set_ylabel('Frecuencia')
@@ -35,14 +35,13 @@ st.pyplot(fig)
 st.subheader("Calcular posición de una nota")
 nota = st.number_input("Introduce una puntuación:", min_value=0.0, max_value=160.0, step=0.1)
 
-if st.button("Calcular"):
-    try:
-        nota = float(nota)
-        filtrado = df_filtered[df_filtered["Puntuacion total directa"] <= nota]
-        if not filtrado.empty:
-            posicion = filtrado.iloc[0]["orden"]
-            st.success(f"La nota {nota} estaría en la posición {int(posicion)} en el examen TAI de 2023.")
-        else:
-            st.warning(f"La nota {nota} estaría en la posición 1, superando a todos los registros del dataset.")
-    except ValueError:
-        st.error("Por favor, introduce un valor numérico válido.")
+# Calcular posición automáticamente al cambiar la nota
+try:
+    filtrado = df_filtered[df_filtered["Puntuacion total directa"] <= nota]
+    if not filtrado.empty:
+        posicion = filtrado.iloc[0]["orden"]
+        st.write(f"La posición para la nota {nota} es: {posicion}")
+    else:
+        st.write("No se encontró una posición para la nota ingresada.")
+except Exception as e:
+    st.write(f"Error al calcular la posición: {e}")
