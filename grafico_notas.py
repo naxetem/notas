@@ -19,6 +19,12 @@ st.title("Gráficos y Posición de Puntuaciones TAI 2023")
 st.subheader("Distribución de puntuaciones")
 fig, ax = plt.subplots(figsize=(10, 6))
 interval_counts.plot(kind='bar', ax=ax, color='blue', width=0.9)
+
+# Ajustar etiquetas del eje X
+intervals = interval_counts.index
+labels = [str(interval.left) if i % 5 == 0 else '' for i, interval in enumerate(intervals)]
+ax.set_xticklabels(labels)
+
 ax.set_xlabel('Intervalo de Puntuación')
 ax.set_ylabel('Frecuencia')
 ax.set_title('Distribución de Puntuaciones en Intervalos de 1 Punto')
