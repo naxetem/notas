@@ -3,8 +3,7 @@ import plotly.express as px
 import streamlit as st
 import plotly.graph_objects as go
 
-# Configurar la página en modo "wide"
-st.set_page_config(layout="wide")
+
 
 
 ### procesado del dataset de notas ###
@@ -28,11 +27,12 @@ interval_counts_acumulada = interval_counts.iloc[::-1].cumsum().iloc[::-1]
 
 
 ### Interfaz de Streamlit ###
-st.title("Gráficos y Posición de Puntuaciones TAI 2023")
+st.set_page_config(layout="wide")
+st.title("Calculadora notas y posición ")
+st.subheader("Calcula la nota en el simulacro y la posición que se hubiera obtenido en la convocatoria de TAI 2023")
+# Configurar la página en modo "wide"
 
 
-# Posición según puntuación
-st.subheader("Calcular posición de una nota")
 
 # Campos para Teoría
 st.write("Teoría")
